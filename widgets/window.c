@@ -214,6 +214,9 @@ widget_window(widget_t *w, luakit_token_t UNUSED(token))
     hints.min_width = 1;
     hints.min_height = 1;
     gtk_window_set_geometry_hints(d->win, NULL, &hints, GDK_HINT_MIN_SIZE);
+#if GTK_CHECK_VERSION(3, 0, 0)
+    gtk_window_set_has_resize_grip(d->win, FALSE);
+#endif
 
     g_object_connect(G_OBJECT(w->widget),
       "signal::add",                G_CALLBACK(add_cb),          w,

@@ -89,6 +89,10 @@ luaH_webview_push_scroll_table(lua_State *L)
 void
 show_scrollbars(webview_data_t *d, gboolean show)
 {
+#if GTK_CHECK_VERSION(3, 0, 0)
+  (void)d;
+  (void)show;
+#else
     GObject *frame = G_OBJECT(webkit_web_view_get_main_frame(d->view));
 
     /* show scrollbars */
@@ -106,4 +110,5 @@ show_scrollbars(webview_data_t *d, gboolean show)
         d->hide_id = g_signal_connect(frame, "scrollbars-policy-changed",
                 G_CALLBACK(true_cb), NULL);
     }
+#endif
 }
